@@ -14,7 +14,7 @@ class Serie(Base):
     classificacao = Column(INTEGER(11), nullable=False)
     thumbnail = Column(VARCHAR(255), nullable=False)
     genero_id = Column(INTEGER, ForeignKey('genero.id'), nullable=False)
-    status = Column(TINYINT(4), nullable=False,default='1')
+    status = Column(TINYINT(4), nullable=False,default=1)
     genero = relationship(Genero,backref='serie_genero')
 
 

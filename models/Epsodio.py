@@ -16,7 +16,7 @@ class Epsodio(Base):
     duracao = Column(VARCHAR(45), nullable=False)
     caminho = Column(VARCHAR(100), nullable=False)
     serie_id = Column(INTEGER, ForeignKey('serie.id'), nullable=False)
-    numero = Column(TINYINT(4), nullable=False,default='1')
+    numero = Column(INTEGER, nullable=False)
     temporada = relationship(Temporada,backref='epsodio_temporada')
     serie = relationship(Serie,backref='epsodio_serie')
 
