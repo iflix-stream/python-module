@@ -18,6 +18,7 @@ class FilmeResource:
         o=0
         for id,nome,genero,caminho,classificacao,duracao in session.query(Filme.id,Filme.nome,Filme.genero,Filme.caminho,Filme.classificacao,Filme.duracao)[1:3]:
             i[o]={
+
                 'id':id,
                 'nome':nome,
                 'genero':{
