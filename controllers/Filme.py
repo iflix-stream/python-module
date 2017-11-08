@@ -23,3 +23,5 @@ class FilmeResource:
         resp.body = json.dumps(i)
         resp.set_header('Content-Type', 'application/json')
         resp.content_type = "application/json"
+    def on_post(self,req,resp):
+        resp.set_header('Content-Type','application/json')
