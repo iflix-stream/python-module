@@ -1,31 +1,23 @@
 import json
-import itertools
 
-import sqlalchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 from models.Filme import Filme
-from marshmallow import fields
-
+from models.banco import bd
 
 class FilmeResource:
     def on_get(self, req, resp):
-        e = create_engine("mysql+pymysql://root:root@localhost/test")
-        Session = sessionmaker()
-        Session.configure(bind=e)
-        session = Session()
+        session = bd()
         i={}
         o=0
-        for id,nome,genero,caminho,classificacao,duracao in session.query(Filme.id,Filme.nome,Filme.genero,Filme.caminho,Filme.classificacao,Filme.duracao)[1:3]:
+        for id,nome,genero,caminho,classificacao,duracao,sinopse,thumbnail in session.query(Filme.id,Filme.nome,Filme.genero_id,Filme.caminho,Filme.classificacao,Filme.duracao,Filme.sinopse,Filme.thumbnail):
             i[o]={
-
                 'id':id,
                 'nome':nome,
-                'genero':{
-                    'id':genero,
-                    'nome':genero
-                },
-                'caminho':caminho
+                'classificacao':classificacao,
+                'caminho':caminho,
+                "duracao":duracao,
+                "sinopse":sinopse,
+                "thumbnail":thumbnail,
+                "genero_id":genero
             }
             o=o+1
         resp.body = json.dumps(i)

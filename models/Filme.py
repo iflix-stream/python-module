@@ -19,11 +19,6 @@ class Filme(Base):
     status = Column(TINYINT(4), nullable=False,default=1)
     genero = relationship(Genero,backref='filme_genero')
 
-    def to_json(self):
-        return dict(id=self.id,nome=self.nome,classificacao=self.classificacao,
-                    caminho=self.caminho,duracao=self.duracao,sinopse=self.sinopse,
-                    thumbnail=self.thumbnail,genero_id=self.genero_id)
-
 
 
 
