@@ -2,7 +2,7 @@ import json
 
 import falcon
 from cerberus import Validator
-
+from util.DecodeReq import parse
 from models.Filme import Filme
 from models.banco import bd
 
@@ -63,7 +63,7 @@ class FilmeResource:
                 'required': True
             }
         }
-        result = json.loads(req.stream.read(), encoding='utf-8')
+        result = parse(req)
         if (v.validate(result, schema)):
             filme = Filme(
                 nome=result['nome'], genero_id=result['genero'], caminho=result['caminho'],
@@ -74,16 +74,17 @@ class FilmeResource:
             session.commit()
             resp.status = falcon.HTTP_CREATED
         else:
-            print (v.errors)
+            resp.body = json.dumps(v.errors)
+            resp.status = falcon.HTTP_400
+        resp.content_type = "application/json"
         resp.set_header('Content-Type', 'application/json')
 
     def on_put(self, req, resp):
-        session = bd()
-        resposta = ""
-        result = json.loads(req.stream.read(), encoding='utf-8')
-        filme = Filme()
-        if ('id' in result):
-            filme.id = result['id']
+        result = parse(req)
+        resp.status = falcon.HTTP_400
+        if ('id' in req.params):
+            session = bd()
+            filme = session.query(Filme).get(req.params['id'])
             if ('classificacao' in result):
                 filme.classificacao = result['classificacao']
             if ('sinopse' in result):
@@ -92,16 +93,24 @@ class FilmeResource:
                 filme.caminho = result['caminho']
             if ('genero' in result):
                 filme.genero_id = result['genero']
+            if ('duracao' in result):
+                filme.duracao = result['duracao']
             if ('nome' in result):
                 filme.nome = result['nome']
             if ('thumbnail' in result):
                 filme.thumbnail = result['thumbnail']
-            session.add(filme)
             session.commit()
-            resp.status = falcon.HTTP_204
-        else:
-            resposta = {'menssagem': 'Informar o id'}
-        resp.body = json.dumps(resposta)
+            resp.status = falcon.HTTP_NO_CONTENT
         resp.content_type = "application/json"
         resp.set_header('Content-Type', 'application/json')
-   
+
+    def on_delete(self, req, resp):
+        resp.status = falcon.HTTP_400
+        if ('id' in req.params):
+            session = bd()
+            filme = session.query(Filme).get(req.params['id'])
+            session.delete(filme)
+            session.commit()
+            resp.status = falcon.HTTP_NO_CONTENT
+        resp.content_type = "application/json"
+        resp.set_header('Content-Type', 'application/json')
