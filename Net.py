@@ -1,5 +1,5 @@
 import falcon
-from controllers.Filme import FilmeResource
+from controllers.FilmeController import FilmeResource
 
 api = falcon.API()
 api.add_route('/filme', FilmeResource())
