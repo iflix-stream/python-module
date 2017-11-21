@@ -1,7 +1,6 @@
 import json
 
 import falcon
-from cerberus import Validator
 from util.DecodeReq import parse
 from dao.FilmeDAO import FilmeDAO
 from validate.FilmeValidate import FilmeValidate

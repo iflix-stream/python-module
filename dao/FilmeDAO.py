@@ -4,7 +4,6 @@ from models.banco import bd
 
 class FilmeDAO:
     def retreave(self,args):
-        print args
         session = bd()
         i = {}
         o = 0
