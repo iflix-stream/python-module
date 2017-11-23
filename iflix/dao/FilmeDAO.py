@@ -1,32 +1,11 @@
+from iflix.dao.ModeloDAO import ModeloDAO
 from iflix.models.Filme import Filme
 from iflix.models.banco import bd
 
 
 class FilmeDAO:
     def retreave(self,args):
-        session = bd()
-        i = {}
-        o = 0
-        for id, nome, genero, caminho, classificacao, duracao, sinopse, thumbnail in session.query(
-                Filme.id, Filme.nome,
-                Filme.genero_id,
-                Filme.caminho,
-                Filme.classificacao,
-                Filme.duracao,
-                Filme.sinopse,
-                Filme.thumbnail):
-            i[o] = {
-                'id': id,
-                'nome': nome,
-                'classificacao': classificacao,
-                'caminho': caminho,
-                "duracao": duracao,
-                "sinopse": sinopse,
-                "thumbnail": thumbnail,
-                "genero_id": genero
-            }
-            o = o + 1
-        return i
+        return ModeloDAO().retreave(args=[Filme.id.name,Filme.nome.name],params={},obj=Filme)
     def create(self,result):
         session = bd()
         filme = Filme(
