@@ -8,5 +8,5 @@ class Genero(Base):
 
     id = Column(INTEGER, primary_key=True)
     nome = Column(VARCHAR(255), nullable=False)
-    status_genero = Column(INTEGER(11), nullable=False,default=1)
+    statusGenero = Column(INTEGER(11), nullable=False,default=1)
 

@@ -1,7 +1,7 @@
 from sqlalchemy import Column,ForeignKey
 from sqlalchemy.dialects.mysql import TINYINT,VARCHAR,TEXT,INTEGER,DATE
 from sqlalchemy.orm import relationship
-
+import time
 from base import Base
 class Usuario(Base):
 
@@ -14,8 +14,8 @@ class Usuario(Base):
     senha = Column(VARCHAR(255), nullable=False)
     email = Column(VARCHAR(255), nullable=False)
     dataNascimento = Column(DATE, nullable=False)
-    dataCriacao = Column(DATE, nullable=False)
-    dataAlteracao = Column(DATE, nullable=False)
+    dataCriacao = Column(DATE, nullable=False,default=time.strftime("%Y/%m/%d"))
+    dataAlteracao = Column(DATE, nullable=False,default=time.strftime("%Y/%m/%d"))
     status = Column(TINYINT(4), nullable=False,default=1)
     isOnline = Column(TINYINT(4), nullable=False,default=0)
 
