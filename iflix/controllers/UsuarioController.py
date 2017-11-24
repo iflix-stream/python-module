@@ -30,7 +30,7 @@ class UsuarioResource:
     def on_put(self, req, resp):
         result = parse(req)
         resp.status = falcon.HTTP_400
-        if UsuarioValidate().validaPut(req.params):
+        if UsuarioValidate().validaPut(req.params) == True:
             result['id'] = req.params['id']
             UsuarioDAO().update(result)
             resp.status = falcon.HTTP_NO_CONTENT
@@ -39,7 +39,7 @@ class UsuarioResource:
 
     def on_delete(self, req, resp):
         resp.status = falcon.HTTP_400
-        if UsuarioValidate().validaDelete(req.params):
+        if UsuarioValidate().validaDelete(req.params) == True:
             UsuarioDAO().delete(req.params['id'])
             resp.status = falcon.HTTP_NO_CONTENT
         resp.content_type = "application/json"

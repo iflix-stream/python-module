@@ -17,7 +17,7 @@ class FilmeResource:
 
     def on_post(self, req, resp):
         content = parse(req)
-        valueValidated = FilmeValidate().validaPost(content)
+        valueValidated = FilmeValidate().validaPost(content) == True
         if valueValidated == True:
             FilmeDAO().create(content)
             resp.status = falcon.HTTP_CREATED
@@ -30,7 +30,7 @@ class FilmeResource:
     def on_put(self, req, resp):
         result = parse(req)
         resp.status = falcon.HTTP_400
-        if FilmeValidate().validaPut(req.params):
+        if FilmeValidate().validaPut(req.params) == True:
             result['id'] = req.params['id']
             FilmeDAO().update(result)
             resp.status = falcon.HTTP_NO_CONTENT
@@ -39,7 +39,7 @@ class FilmeResource:
 
     def on_delete(self, req, resp):
         resp.status = falcon.HTTP_400
-        if FilmeValidate().validaDelete(req.params):
+        if FilmeValidate().validaDelete(req.params) == True:
             FilmeDAO().delete(req.params['id'])
             resp.status = falcon.HTTP_NO_CONTENT
         resp.content_type = "application/json"

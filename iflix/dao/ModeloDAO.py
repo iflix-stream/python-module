@@ -32,7 +32,6 @@ class ModeloDAO:
     def retreaveId(self, args, params, obj):
         session = bd()
         i = collections.defaultdict(dict)
-        print params['id']
         classe = session.query(obj).get(params['id'])
         for j in args:
             i[j] = (getattr(classe, j))
