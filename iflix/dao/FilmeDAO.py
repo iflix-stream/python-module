@@ -9,9 +9,10 @@ from iflix.models.banco import bd
 class FilmeDAO:
     def retreave(self, args):
         a = ModeloDAO().retreave(
-            args=[Filme.id.name, Filme.nome.name, Filme.classificacao.name, Filme.sinopse.name, Filme.thumbnail.name,
-                  Filme.genero_id.name], params=args, obj=Filme)
-        if isinstance(a,list):
+            args=[Filme.id.name, Filme.nome.name, Filme.classificacao.name, Filme.sinopse.name, Filme.caminho.name,
+                  Filme.thumbnail.name,
+                  Filme.duracao.name, Filme.genero_id.name], params=args, obj=Filme)
+        if isinstance(a, list):
             a.pop(0)
         return a
 

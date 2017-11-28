@@ -23,12 +23,11 @@ class SerieDAO:
                 indexEp = 1
                 a[index]['temporadas'] = [{}]
                 for temp in session.query(Temporada).filter_by(serie_id=a[index][Serie.id.name]):
-                    dici = {}
-                    dici['id'] = temp.id
-                    a[index]['temporadas'].append(dici)
+
+                    a[index]['temporadas'].append({'id':temp.id,'numero':temp.numero})
                     a[index]['temporadas'][indexTemp]['episodios'] = [{}]
                     for ep in session.query(Episodio).filter_by(temporada_id=temp.id):
-                        a[index]['temporadas'][indexTemp]['episodios'].append({'id': ep.id})
+                        a[index]['temporadas'][indexTemp]['episodios'].append({'id': ep.id,'nome':ep.nome,'sinopse':ep.sinopse,'duracao':ep.duracao,'caminho':ep.caminho})
                         indexEp += 1
                     a[index]['temporadas'][indexTemp]['episodios'].pop(0)
                     indexTemp += 1
