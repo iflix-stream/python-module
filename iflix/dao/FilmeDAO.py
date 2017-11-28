@@ -7,11 +7,15 @@ from iflix.models.banco import bd
 
 
 class FilmeDAO:
-    def retreave(self,args):
-        a = ModeloDAO().retreave(args=[Filme.id.name,Filme.nome.name,Filme.classificacao.name,Filme.sinopse.name,Filme.thumbnail.name,Filme.genero_id.name],params=args,obj=Filme)
-        a.pop(0)
+    def retreave(self, args):
+        a = ModeloDAO().retreave(
+            args=[Filme.id.name, Filme.nome.name, Filme.classificacao.name, Filme.sinopse.name, Filme.thumbnail.name,
+                  Filme.genero_id.name], params=args, obj=Filme)
+        if isinstance(a,list):
+            a.pop(0)
         return a
-    def create(self,result):
+
+    def create(self, result):
         session = bd()
         filme = Filme(
             nome=result['nome'], genero_id=result['genero'], caminho=result['caminho'],
@@ -20,7 +24,8 @@ class FilmeDAO:
         )
         session.add(filme)
         session.commit()
-    def update(self,result):
+
+    def update(self, result):
         session = bd()
         filme = session.query(Filme).get(result['id'])
         if 'classificacao' in result:
@@ -38,7 +43,8 @@ class FilmeDAO:
         if 'thumbnail' in result:
             filme.thumbnail = result['thumbnail']
         session.commit()
-    def delete(self,arg):
+
+    def delete(self, arg):
         session = bd()
         filme = session.query(Filme).get(arg)
         session.delete(filme)
