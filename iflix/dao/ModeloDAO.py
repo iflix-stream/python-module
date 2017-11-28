@@ -18,15 +18,17 @@ class ModeloDAO:
 
     def retreaveAll(self, args, params, obj):
         session = bd()
-        i = collections.defaultdict(dict)
-        o = 0
+        i = [{}]
         offset = 0
         if 'pag' in params:
             offset = int(params['pag']) * 20
         for classe in session.query(obj).order_by(obj.id)[int(offset): 20 + int(offset)]:
+            asd = {}
             for j in args:
-                i[o][j] = (getattr(classe, j))
-            o = o + 1
+                asd[j] = (getattr(classe, j))
+            classe = session.query(Genero).get(classe.genero_id)
+            asd['genero_nome'] = classe.nome
+            i.append(asd)
         return i
 
     def retreaveId(self, args, params, obj):

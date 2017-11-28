@@ -5,9 +5,9 @@ from sqlalchemy.orm import relationship
 from base import Base
 from Temporada import Temporada
 from Serie import Serie
-class Epsodio(Base):
+class Episodio(Base):
 
-    __tablename__ = "epsodio"
+    __tablename__ = "episodio"
 
     id = Column(INTEGER, primary_key=True)
     nome = Column(VARCHAR(255), nullable=False)

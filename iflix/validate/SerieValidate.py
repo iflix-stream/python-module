@@ -9,10 +9,8 @@ class SerieValidate():
                 'required': True
             },
             'genero': {
-                'required': True
-            },
-            'caminho': {
-                'required': True
+                'required': True,
+                'type': 'integer'
             },
             'classificacao': {
                 'required': True,

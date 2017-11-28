@@ -8,11 +8,8 @@ from iflix.models.banco import bd
 
 class FilmeDAO:
     def retreave(self,args):
-        a=  ModeloDAO().retreave(args=[Filme.id.name,Filme.nome.name,Filme.classificacao.name,Filme.sinopse.name,Filme.thumbnail.name,Filme.genero_id.name],params=args,obj=Filme)
-        session = bd()
-        for i in a:
-            classe = session.query(Genero).get(a[i][Filme.genero_id.name])
-            a[i]['genero_nome'] = classe.nome
+        a = ModeloDAO().retreave(args=[Filme.id.name,Filme.nome.name,Filme.classificacao.name,Filme.sinopse.name,Filme.thumbnail.name,Filme.genero_id.name],params=args,obj=Filme)
+        a.pop(0)
         return a
     def create(self,result):
         session = bd()

@@ -1,21 +1,38 @@
 import collections
 
 from iflix.dao.ModeloDAO import ModeloDAO
+from iflix.models.Episodio import Episodio
 from iflix.models.Filme import Filme
 from iflix.models.Genero import Genero
 from iflix.models.Serie import Serie
+from iflix.models.Temporada import Temporada
 from iflix.models.banco import bd
 
 
 class SerieDAO:
     def retreave(self, args):
+        index = 1
         a = ModeloDAO().retreave(
             args=[Serie.id.name, Serie.nome.name, Serie.classificacao.name, Serie.sinopse.name, Serie.thumbnail.name,
                   Serie.genero_id.name], params=args, obj=Serie)
         session = bd()
         for i in a:
-            classe = session.query(Genero).get(a[i][Serie.genero_id.name])
-            a[i]['genero_nome'] = classe.nome
+            indexTemp =1
+            indexEp = 1
+            a[index]['temporadas'] = [{}]
+            for temp in session.query(Temporada).filter_by(serie_id=a[index][Serie.id.name]):
+                dici = {}
+                dici['id'] = temp.id
+                a[index]['temporadas'].append(dici)
+                a[index]['temporadas'][indexTemp]['episodios'] = [{}]
+                for ep in session.query(Episodio).filter_by(temporada_id=temp.id):
+                    a[index]['temporadas'][indexTemp]['episodios'].append({'id':ep.id})
+                    indexEp += 1
+                a[index]['temporadas'][indexTemp]['episodios'].pop(0)
+                indexTemp += 1
+        index += 1
+        a[1]['temporadas'].pop(0)
+        a.pop(0)
         return a
 
     def create(self, result):
